@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # codeintel-SQL-Injection-PreparedStatement-Checker
 Identifies locations where string concatenation is used to build SQL queries instead of using prepared statements, highlighting potential SQL injection vulnerabilities. Employs AST parsing to analyze SQL query construction. - Focused on Tools for static code analysis, vulnerability scanning, and code quality assurance
 
