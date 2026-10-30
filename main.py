@@ -2,7 +2,7 @@ import argparse
 import ast
 import logging
 import os
-import sqlite3  # For demonstrating SQL usage
+import sys
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -50,13 +50,37 @@ def check_for_sql_injection(filepath, ignore_list=None):
         logging.error(f"File not found: {filepath}")
         return []
 
+    # A caller that passes no ignore list gets an empty one. Testing
+    # membership in None raised TypeError inside the per node handler
+    # below, which swallowed it at debug level, so a direct call with
+    # the default silently reported nothing for any file.
+    if ignore_list is None:
+        ignore_list = []
+
     vulnerable_lines = []
     try:
         with open(filepath, "r") as f:
             code = f.read()
         tree = ast.parse(code)
 
+        def sql_in_text(text):
+            upper = text.upper()
+            return any(word in upper for word in ("SELECT", "INSERT", "UPDATE", "DELETE"))
+
         for node in ast.walk(tree):
+            # The pattern this tool exists for is usually built on an
+            # assignment line (query = "SELECT ..." + name) and only
+            # executed later by variable, so call arguments alone miss
+            # it. Assignments are checked as well as call arguments,
+            # including f-string builds.
+            if isinstance(node, ast.Assign):
+                for sub_node in ast.walk(node.value):
+                    if isinstance(sub_node, ast.BinOp) and isinstance(sub_node.op, ast.Add) and sql_in_text(ast.unparse(sub_node)):
+                        vulnerable_lines.append((node.lineno, f"Potential SQL injection vulnerability: {ast.unparse(node.value)}"))
+                        break
+                    if isinstance(sub_node, ast.JoinedStr) and sql_in_text(ast.unparse(sub_node)) and any(isinstance(v, ast.FormattedValue) for v in sub_node.values):
+                        vulnerable_lines.append((node.lineno, f"Potential SQL injection vulnerability: {ast.unparse(node.value)}"))
+                        break
             if isinstance(node, (ast.Call, ast.Expr)):
                 # Check for function calls or expressions
                 try:
@@ -120,6 +144,12 @@ def main():
 
     # Set log level based on command line argument
     logging.getLogger().setLevel(args.log_level)
+
+    # The check function returns an empty list for a missing file,
+    # which main used to report as a clean scan with exit 0.
+    if not os.path.isfile(args.filepath):
+        logging.error(f"File not found: {args.filepath}")
+        sys.exit(1)
 
     if not args.filepath:
         logging.error("Filepath is required.")
