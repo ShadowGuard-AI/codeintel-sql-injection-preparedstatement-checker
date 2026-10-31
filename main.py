@@ -43,12 +43,12 @@ def check_for_sql_injection(filepath, ignore_list=None):
         ignore_list (list, optional): A list of function/method names to ignore. Defaults to None.
 
     Returns:
-        list: A list of tuples, where each tuple contains the line number and the potentially vulnerable code snippet.  Returns an empty list if no vulnerabilities are found or if an error occurs.
+        list: A list of tuples, where each tuple contains the line number and the potentially vulnerable code snippet.  Returns an empty list only when the file was parsed and no vulnerabilities were found, and None when the file could not be read or parsed, so a caller can tell an unexamined file apart from a clean one.
     """
 
     if not os.path.exists(filepath):
         logging.error(f"File not found: {filepath}")
-        return []
+        return None
 
     # A caller that passes no ignore list gets an empty one. Testing
     # membership in None raised TypeError inside the per node handler
@@ -89,28 +89,41 @@ def check_for_sql_injection(filepath, ignore_list=None):
                         if func_name in ignore_list:
                             continue
                         args = node.args
+                    elif isinstance(node.value, ast.Call):
+                        # The inner call is visited as its own node;
+                        # walking it again from here would report
+                        # every finding in it twice.
+                        continue
                     else:
                         args = [node.value]
                     for arg in args:
-                        if isinstance(arg, ast.BinOp) and isinstance(arg.op, ast.Add):
-                            # String concatenation detected
-                            left = ast.unparse(arg.left)
-                            right = ast.unparse(arg.right)
-
-                            # Basic check to see if SQL is likely involved (crude but effective)
-                            if "SELECT" in left.upper() or "INSERT" in left.upper() or "UPDATE" in left.upper() or "DELETE" in left.upper() or \
-                               "SELECT" in right.upper() or "INSERT" in right.upper() or "UPDATE" in right.upper() or "DELETE" in right.upper():
+                        # The assignment handler above also catches
+                        # f-string builds, so a build passed straight
+                        # to a call has to be checked for the same
+                        # forms here: an f-string with formatted
+                        # values, a % format build, and a .format
+                        # call, alongside the original + build.
+                        for sub_node in ast.walk(arg):
+                            is_build = False
+                            if isinstance(sub_node, ast.BinOp) and isinstance(sub_node.op, (ast.Add, ast.Mod)):
+                                is_build = True
+                            elif isinstance(sub_node, ast.JoinedStr) and any(isinstance(v, ast.FormattedValue) for v in sub_node.values):
+                                is_build = True
+                            elif isinstance(sub_node, ast.Call) and isinstance(sub_node.func, ast.Attribute) and sub_node.func.attr == "format":
+                                is_build = True
+                            if is_build and sql_in_text(ast.unparse(sub_node)):
                                 vulnerable_lines.append((node.lineno, f"Potential SQL injection vulnerability: {ast.unparse(arg)}"))
+                                break
                 except Exception as e:
                     logging.debug(f"Error processing node: {node} - {e}") # Increased verbosity, making the exceptions DEBUG log level
 
 
     except FileNotFoundError:
         logging.error(f"File not found: {filepath}")
-        return []
+        return None
     except Exception as e:
         logging.error(f"Error parsing file: {filepath} - {e}")
-        return []
+        return None
 
     return vulnerable_lines
 
@@ -157,6 +170,12 @@ def main():
 
     try:
         vulnerable_lines = check_for_sql_injection(args.filepath, args.ignore)
+
+        if vulnerable_lines is None:
+            # The file was not read or not parsed. Printing the clean
+            # line here would give an unexamined file the same verdict
+            # as a file that was parsed and found clean.
+            sys.exit(1)
 
         if vulnerable_lines:
             print("Potential SQL injection vulnerabilities found:")

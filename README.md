@@ -14,5 +14,8 @@ Identifies locations where string concatenation is used to build SQL queries ins
 - `--ignore`: List of functions/methods to ignore during analysis (e.g., 
 - `--log-level`: No description provided
 
+## What is checked and what a clean result means
+SQL built with `+`, an f-string with formatted values, `%` formatting, or a `.format` call is checked both on assignment lines and in arguments passed straight to a call such as `execute(...)`. The line "No potential SQL injection vulnerabilities found." is printed only for a file that was read and parsed. A file that cannot be read or parsed exits 1 and never prints that line.
+
 ## License
 Copyright (c) ShadowStrikeHQ
