@@ -65,6 +65,9 @@ def check_for_sql_injection(filepath, ignore_list=None):
 
         def sql_in_text(text):
             upper = text.upper()
+            # I decide a string is SQL when one of these words appears in
+            # it at all. A sentence in a comment-like string that says
+            # delete is enough, which is why I call these potential only.
             return any(word in upper for word in ("SELECT", "INSERT", "UPDATE", "DELETE"))
 
         for node in ast.walk(tree):
@@ -141,6 +144,9 @@ def get_function_name(node):
     if isinstance(node, ast.Name):
         return node.id
     elif isinstance(node, ast.Attribute):
+        # I return only the last part of a method call, so cursor.execute
+        # and anything.execute share one name for the ignore list.
+        # Ignoring execute therefore ignores every object's execute.
         return node.attr
     elif isinstance(node, ast.Call): # Added to correctly handle nested calls, such as function(another_function())
         return get_function_name(node.func)
@@ -178,6 +184,9 @@ def main():
             sys.exit(1)
 
         if vulnerable_lines:
+            # I print the findings and return normally, so a file with
+            # vulnerable lines and a clean file both exit 0. The printed
+            # list is the verdict a caller has to read.
             print("Potential SQL injection vulnerabilities found:")
             for line_number, code_snippet in vulnerable_lines:
                 print(f"Line {line_number}: {code_snippet}")
