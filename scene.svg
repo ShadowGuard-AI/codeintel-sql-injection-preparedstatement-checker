@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" role="img" aria-label="Beetle room in three depths: a far drawer slides open and closed on its runners, a hand lens turns into focus over a pinned specimen, a fine brush lifts dust in short strokes, the lamp holds steady">
+<rect width="1200" height="340" fill="#60584a"/>
+<g>
+<rect x="60" y="30" width="330" height="180" fill="#342a1e"/>
+<g fill="#423626" stroke="#17130e"><rect x="76" y="46" width="140" height="34"/><rect x="228" y="46" width="140" height="34"/><rect x="76" y="92" width="140" height="34"/><rect x="228" y="92" width="140" height="34"/><rect x="76" y="138" width="140" height="34"/><rect x="228" y="138" width="140" height="34"/></g>
+<g fill="none" stroke="#d9973b"><rect x="128" y="58" width="36" height="10"/><rect x="280" y="58" width="36" height="10"/><rect x="128" y="104" width="36" height="10"/><rect x="280" y="104" width="36" height="10"/><rect x="128" y="150" width="36" height="10"/><rect x="280" y="150" width="36" height="10"/></g>
+<g>
+<animateTransform attributeName="transform" type="translate" values="0 0;26 0;26 0;0 0" keyTimes="0;0.18;0.82;1" dur="18s" repeatCount="indefinite"/>
+<rect x="76" y="92" width="140" height="34" fill="#e4dcc6" stroke="#17130e"/>
+<g fill="#17130e"><ellipse cx="110" cy="109" rx="6" ry="8"/><ellipse cx="146" cy="109" rx="6" ry="8"/><ellipse cx="182" cy="109" rx="6" ry="8"/></g>
+</g>
+</g>
+<rect x="0" y="228" width="1200" height="12" fill="#282016"/>
+<g>
+<rect x="470" y="196" width="230" height="30" fill="#e4dcc6" stroke="#17130e"/>
+<g fill="#17130e"><ellipse cx="520" cy="211" rx="8" ry="11"/><ellipse cx="575" cy="211" rx="8" ry="11"/><ellipse cx="630" cy="211" rx="8" ry="11"/></g>
+<g>
+<circle cx="575" cy="211" r="17" fill="none" stroke="#17130e" stroke-width="3">
+<animate attributeName="r" values="24;17;24" dur="13s" repeatCount="indefinite"/></circle>
+<line x1="590" y1="226" x2="606" y2="242" stroke="#17130e" stroke-width="3"/>
+</g>
+<g>
+<animateTransform attributeName="transform" type="translate" values="0 0;14 -3;0 0;14 -3;0 0" dur="9s" repeatCount="indefinite"/>
+<line x1="770" y1="222" x2="806" y2="206" stroke="#8a6f42" stroke-width="4"/>
+<path d="M806 206 l16 -4 -4 10 z" fill="#c9b280"/>
+</g>
+</g>
+<g>
+<ellipse cx="1010" cy="196" rx="52" ry="26" fill="#96804e" opacity="0.55"/>
+<line x1="1010" y1="240" x2="1010" y2="196" stroke="#17130e" stroke-width="4"/>
+<polygon points="994,196 1026,196 1018,182 1002,182" fill="#d9973b"/>
+<rect x="960" y="238" width="90" height="14" fill="#f1ead8" stroke="#17130e"/>
+</g>
+</svg>
