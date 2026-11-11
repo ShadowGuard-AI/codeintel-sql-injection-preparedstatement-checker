@@ -3,93 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>codeintel-sql-injection-preparedstatement-checker: a catalogue of drawers</title>
+<title>codeintel-sql-injection-preparedstatement-checker</title>
 <style>
-@font-face { font-family: 'Betania Patmos GDL'; src: url('fonts/BetaniaPatmosGDL.ttf') format('truetype'); }
-@font-face { font-family: 'Barlow'; src: url('fonts/Barlow.ttf') format('truetype'); }
-:root { --black:#17130e; --bone:#f1ead8; --pale:#efe9da; --amber:#d9973b; --red:#b3312a; --ink:#1d1a15; }
+@font-face { font-family: 'Sigmar'; src: url('fonts/Sigmar.ttf') format('truetype'); }
+@font-face { font-family: 'Merriweather Sans'; src: url('fonts/MerriweatherSans.ttf') format('truetype'); }
+:root { --bg:#1c1a24; --panel:#efe6d2; --ink:#201a14; --accent:#2b3a67; }
 * { box-sizing: border-box; }
-body { margin:0; background:var(--pale); color:var(--ink); font-family:'Barlow',sans-serif; line-height:1.55; }
-header { padding:2.4rem 6vw 0.6rem; }
-h1, h2 { font-family:'Betania Patmos GDL',serif; color:var(--black); }
-h1 { font-size:1.8rem; margin:0.4rem 0; }
-.hero { width:100%; border:3px solid var(--black); }
-.logo { width:150px; float:right; margin:0 0 1rem 1rem; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:'Merriweather Sans',sans-serif; line-height:1.55; }
+header { padding:2rem 6vw 0.5rem; }
+h1, h2 { font-family:'Sigmar',serif; color:var(--panel); }
+h1 { font-size:2rem; margin:0.5rem 0; overflow-wrap:anywhere; }
+.tag { color:var(--panel); opacity:0.9; max-width:60ch; }
+.hero { width:100%; border:3px solid var(--accent); }
+.logo { width:170px; float:right; margin:0 0 1rem 1rem; border:2px solid var(--accent); background:var(--panel); }
 main { padding:0 6vw 2rem; }
-.drawer { background:var(--bone); border:2px solid var(--black); padding:1.1rem 1.3rem; margin:1.2rem 0; }
-.callout { background:var(--bone); border:2px solid var(--black); padding:0.7rem 1rem; margin:0.9rem 0; }
-.callout h3 { font-family:'Betania Patmos GDL',serif; color:var(--black); margin:0 0 0.3rem; font-size:1rem; }
-.fault { color:var(--red); font-weight:600; }
-code { background:#e0d6ba; padding:0.05rem 0.3rem; }
-.btn { display:inline-block; background:#342a1e; border:2px solid var(--black); color:var(--bone); font-family:'Betania Patmos GDL',serif; padding:0.35rem 0.6rem; margin:0.3rem 0.4rem 0.3rem 0; text-decoration:none; }
-.btn span { background:var(--bone); color:var(--black); padding:0.25rem 0.8rem; display:inline-block; }
-.btn:hover { box-shadow: inset 0 -3px 0 var(--amber); }
-a { color:var(--black); }
-table { border-collapse:collapse; width:100%; }
-td, th { border:1px solid var(--black); padding:0.4rem 0.6rem; text-align:left; }
-footer { padding:0 6vw 2.4rem; color:var(--black); }
+.bay { background:var(--panel); border:2px solid var(--accent); padding:1.1rem 1.3rem; margin:1.2rem 0; }
+.bay img.wide { width:100%; }
+.fault { border-left:6px solid var(--accent); padding-left:0.8rem; }
+code { background:rgba(0,0,0,0.08); padding:0.05rem 0.3rem; }
+footer { padding:0 6vw 2.4rem; color:var(--panel); }
+footer a { color:var(--panel); }
 </style>
 </head>
 <body>
 <header>
-<img class="hero" src="assets/intro-banner.png" alt="One open beetle drawer in the foreground, a tidy bench, and cabinet banks behind, no readable text">
-<img class="logo" src="assets/logo.png" alt="A single beetle drawer with six pinned beetles in two rows, a brass label holder, one red dot, and the name below">
-<p>Specimen label, first drawer of the catalogue.</p>
+<img class="hero" src="assets/intro-banner.png" alt="Punched cards passing over the loom cylinder close up, rows of round holes in plain buff card catching the light">
 <h1>codeintel-sql-injection-preparedstatement-checker</h1>
-<p>Each specimen separate on its own pin, in its own drawer place. Each value separate from the query text, in the same manner.</p>
-<nav>
-<a class="btn" href="#run"><span>Check This File</span></a>
-<a class="btn" href="#settings"><span>List Ignored Calls</span></a>
-<a class="btn" href="#settings"><span>Set the Log Level</span></a>
-</nav>
-<img class="hero" src="assets/banner.png" alt="The beetle room: cabinet banks, one open drawer, a bench with setting board, hand lens, pinning block, forceps and blank labels, a warm lamp, and the title on the room label above the nearest bank">
+<p class="tag">Jacquard loom card chain photography: a pattern punched once beforehand and replayed exactly, against a question rebuilt freehand at every asking.</p>
 </header>
 <main>
-<section class="drawer" id="what">
-<h2>What the Checker Does</h2>
-<p>The README states it in full: <q>Identifies locations where string concatenation is used to build SQL queries instead of using prepared statements, highlighting potential SQL injection vulnerabilities. Employs AST parsing to analyze SQL query construction.</q></p>
-<p>It identifies locations where string concatenation is used to build SQL queries instead of prepared statements. It highlights possible SQL injection weaknesses. It uses AST parsing to analyse SQL query construction. The drawers that follow narrow those statements to what the code actually does. No drawer widens a claim made in an earlier drawer.</p>
+<section class="bay">
+<img class="logo" src="assets/logo.png" alt="One plain buff punched card with rows of round holes and a laced edge at the top, inside a dark ring">
+
+<p>This tool parses one Python file into a syntax tree and reports the places where SQL text is built by joining instead of passed as a prepared statement. Run it as <code>python3 main.py FILEPATH</code>; the positional names one Python file. Options: <code>--ignore</code> taking function and method names to skip, and <code>--log-level</code> with five permitted values and an INFO default.</p>
+<p>A string counts as SQL when SELECT, INSERT, UPDATE or DELETE appears anywhere in its unparsed text at all, so a sentence in a comment-like string that merely says delete is enough, which is why every finding is labelled potential only.</p>
+<p>The four build forms are unevenly covered: assignment lines are checked for the plus build and the f-string build only, while call arguments are checked for all four (plus, percent, f-string, and the .format call), so the README's wider sentence claiming all four forms are checked in both places overstates the code. The ignore test compares only the last part of a call's name, so ignoring execute ignores every object's execute method alike. A file that cannot be read or parsed returns a distinct no result and exits 1, never printing the clean line; a parsed file with findings prints them and returns normally, and a clean parsed file prints that none were found, so findings and clean files both exit 0 and the printed list is the verdict a caller has to read.</p>
+<p class="fault">Recorded traps, preserved in the README: the clone URL names the stale ShadowStrikeHQ org; the usage line is a placeholder naming no file path; the parameter list omits the required positional filepath, leaves --log-level undescribed, and its --ignore entry breaks off mid example; and the closing licence line reads Copyright (c) ShadowStrikeHQ while the LICENSE file is MIT.</p>
+
 </section>
-<section class="drawer" id="test">
-<h2>Four Words Decide SQL</h2>
-<p>The code decides that a string counts as SQL when one of four words appears anywhere inside it. The words are SELECT, INSERT, UPDATE, and DELETE. Letter case does not affect the test. A word inside a longer piece of text still counts. A plain sentence that contains the word delete therefore counts as SQL for this test.</p>
-<p>The checker reports potential cases only. It does not prove that a flagged line can be exploited. It does not prove that an unflagged line is safe.</p>
+<section class="bay">
+<img class="wide" src="assets/banner.png" alt="A great oak loom with a chain of plain punched cards feeding over its cylinder, the weaver watching while indigo warp threads lift in their set order below">
 </section>
-<section class="drawer" id="forms">
-<h2>Four Forms and Two Places</h2>
-<p>The four construction forms are a build with the plus sign, an f-string that holds formatted values, a build with percent formatting, and a call to the format method. The two places where they are checked are assignment lines and arguments passed straight to a call, such as an argument passed to execute.</p>
-<p>The checking is uneven. Assignment lines are checked for the plus build and for the f-string build only. Arguments to a call are checked for all four forms. A percent build on an assignment line is not reported. A format call on an assignment line is not reported. The README sentence that places all four forms in both places is therefore wider than the code, and this drawer prints the narrower code account.</p>
-<div class="callout"><h3>Assignment Lines Miss Two Forms</h3>
-<p>Percent formatting and the format call are checked in call arguments only. The README sentence covering both places with all four forms is recorded as an overstatement.</p></div>
-</section>
-<section class="drawer" id="run">
-<h2>Install and Run Form</h2>
-<p>Install line, in full: <code>git clone https://github.com/ShadowStrikeHQ/codeintel-sql-injection-preparedstatement-checker</code></p>
-<div class="callout"><h3>Clone Line Names the Wrong House</h3>
-<p class="fault">The address names ShadowStrikeHQ. It does not name ShadowGuard-AI. The README gives no change of directory and no dependency step, and this page invents neither step.</p></div>
-<p>Usage line, in full: <code>./codeintel-sql-injection-preparedstatement-checker [params]</code>. A note beside it marks the line as a placeholder. The true form stands beside the note: the true form takes one Python file path as a required positional argument. The README parameter list does not name that path, and this page names the omission in plain terms.</p>
-</section>
-<section class="drawer" id="settings">
-<h2>Settings, in README Order</h2>
-<table>
-<tr><th>Setting</th><th>README entry</th><th>Code account</th></tr>
-<tr><td><code>-h</code></td><td>Show help message and exit</td><td>Described.</td></tr>
-<tr><td><code>--ignore</code></td><td>List of functions/methods to ignore during analysis (e.g., </td><td>The entry is cut short after an opening example mark, and is printed here as it stands. The ignore test compares the last part of a call name only. A call written as cursor.execute is tested under the name execute.</td></tr>
-<tr><td><code>--log-level</code></td><td>No description provided</td><td>The blank is recorded as a blank. The setting accepts DEBUG, INFO, WARNING, ERROR, and CRITICAL. The default value is INFO.</td></tr>
-</table>
-<div class="callout"><h3>Ignoring Execute Ignores Every Execute</h3>
-<p>Because the test compares the last part of a call name only, an entry that ignores execute therefore ignores every object method named execute.</p></div>
-</section>
-<section class="drawer" id="clean">
-<h2>The Clean Sentence Means the File Was Read</h2>
-<p>The sentence No potential SQL injection vulnerabilities found. is printed only for a file that was read and parsed and held no flagged build. A file that cannot be read returns no result list at all in the code. A file that cannot be parsed returns the same empty signal in code terms. The program treats that signal as an error and exits 1 in that case. It never prints the clean sentence for such a file.</p>
-<p>A file that holds flagged lines prints the heading Potential SQL injection vulnerabilities found. It then prints each finding by line number with its code snippet. That file exits 0. A clean file also exits 0. The printed text is the verdict. The exit code separates an unexamined file from an examined file. It does not separate a flagged file from a clean file.</p>
-<p>The README section, as printed: SQL built with <code>+</code>, an f-string with formatted values, <code>%</code> formatting, or a <code>.format</code> call is checked both on assignment lines and in arguments passed straight to a call such as <code>execute(...)</code>. The line "No potential SQL injection vulnerabilities found." is printed only for a file that was read and parsed. A file that cannot be read or parsed exits 1 and never prints that line.</p>
-<p>Licence line, in full: Copyright (c) ShadowStrikeHQ</p>
-<p class="fault">Fault, flagged in place: the licence line carries the same house fault as the clone line. No licence name is given in the README, and this page adds none.</p>
-<p>Recorded as printed: the README title capitalises the slug as codeintel-SQL-Injection-PreparedStatement-Checker. The slug itself is all lower case.</p>
-</section>
+<section class="bay"><h2 style="color:var(--ink)">Diagrams</h2><img class="wide" src="assets/architecture.png" alt="Architecture diagram"><img class="wide" src="assets/flowchart.png" alt="Flowchart diagram"><img class="wide" src="assets/product-map.png" alt="Product map diagram"></section>
 </main>
-<footer><p>End of the catalogue. The open drawer is closed. The bench is tidy. The lamp stays on at the bench end.</p></footer>
+<footer>
+<p>ShadowGuard-AI. Source and full documentation in the repository README. Fonts: Sigmar and Merriweather Sans, self-hosted under their licences in the fonts folder.</p>
+</footer>
 </body>
 </html>
