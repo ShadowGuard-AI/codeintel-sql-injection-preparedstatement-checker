@@ -1,12 +1,12 @@
-![One open beetle drawer near and large in the foreground, pinned beetles in rows with blank labels under them, the bench tidy behind it, and closed cabinet banks rising at the back, no readable text](intro-banner.png)
+![Punched cards passing over the loom cylinder close up, rows of round holes in plain buff card catching the light](intro-banner.png)
 
 Specimen label plate: the title below is set in Betania Patmos GDL in cabinet black on a bone white plate ruled as a specimen label. A small beetle drawer thumbnail sits beside the major headings, at punctuation size; plain ruled headings serve at minor sections.
 
 # codeintel-SQL-Injection-PreparedStatement-Checker
 
-![A single beetle drawer seen from the front and slightly above, open by a small amount, six pinned beetles in two rows with blank labels, a brass label holder at the centre of the front, one small red dot at the right end, and the name lettered below](logo.png)
+![One plain buff punched card with rows of round holes and a laced edge at the top, inside a dark ring](logo.png)
 
-![The beetle room as a working room: cabinet banks at the back, one drawer open with pinned rows, a bench with setting board, hand lens, pinning block, forceps and blank labels, one warm lamp, and the title once on the large room label above the nearest bank](banner.png)
+![A great oak loom with a chain of plain punched cards feeding over its cylinder, the weaver watching while indigo warp threads lift in their set order below](banner.png)
 
 ![The beetle room in three depths: a far drawer sliding open a short distance on its runners and closing again, a hand lens turning into focus over a pinned specimen, a fine brush lifting dust in short strokes, the lamp light holding steady](scene.svg)
 
